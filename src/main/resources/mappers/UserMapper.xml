@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microdata.osmpservice.dao.UserDao">
+    <select id="findByUserId" parameterType="string">
+      SELECT * FROM sys_user WHERE user_id = #{userId}
+    </select>
+    <!--结果集映射-->
+    <resultMap id="userMap" type="com.microdata.osmpservice.entity.User">
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="username"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="telephone" property="telephone"/>
+        <result column="xybz" property="chooseFlag"/>
+        <result column="role_id" property="roleId"/>
+    </resultMap>
+</mapper>
