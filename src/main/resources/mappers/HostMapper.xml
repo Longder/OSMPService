@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microdata.osmpservice.dao.HostDao">
+    <select id="findAll" resultMap="hostMap">
+      SELECT * FROM pms_host
+    </select>
+    <resultMap id="hostMap" type="com.microdata.osmpservice.entity.po.Host">
+        <result column="id" property="id"/>
+        <result column="ip" property="ip"/>
+        <result column="host_name" property="hostName"/>
+        <result column="host_lb" property="function"/>
+        <result column="host_lx" property="category"/>
+        <result column="chooseFlag" property="xybz"/>
+    </resultMap>
+</mapper>

@@ -1,6 +1,6 @@
 package com.microdata.osmpservice.dao;
 
-import com.microdata.osmpservice.entity.User;
+import com.microdata.osmpservice.entity.po.User;
 import org.springframework.stereotype.Repository;
 
 /**

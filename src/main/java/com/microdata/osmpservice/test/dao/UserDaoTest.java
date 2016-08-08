@@ -1,7 +1,7 @@
-package com.microdata.osmpservice.test;
+package com.microdata.osmpservice.test.dao;
 
 import com.microdata.osmpservice.dao.UserDao;
-import com.microdata.osmpservice.entity.User;
+import com.microdata.osmpservice.entity.po.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

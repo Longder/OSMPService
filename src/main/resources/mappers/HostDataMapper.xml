@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microdata.osmpservice.dao.HostDataDao">
+    <select id="findAll" resultMap="hostDataMap">
+        SELECT * FROM pms_host_data
+    </select>
+
+    <resultMap id="hostDataMap" type="com.microdata.osmpservice.entity.po.HostData">
+        <result column="ip" property="ip"/>
+        <result column="rq" property="date"/>
+        <result column="host_name" property="hostName"/>
+        <result column="host_lb" property="function"/>
+        <result column="host_lx" property="category"/>
+        <result column="server_jkbz" property="serverInterfaceFlag"/>
+        <result column="host_state" property="hostState"/>
+        <result column="cpu" property="cpu"/>
+        <result column="cpu_warning" property="cpuWarning"/>
+        <result column="memory" property="memory"/>
+        <result column="memory_warning" property="memoryWarning"/>
+        <result column="storage" property="storage"/>
+        <result column="storage_warning" property="storageWarning"/>
+        <result column="db_type" property="dbType"/>
+        <result column="db_State" property="dbState"/>
+        <result column="mid_type" property="midType"/>
+        <result column="mid_state" property="midState"/>
+        <result column="web_name" property="webName"/>
+        <result column="web_state" property="webState"/>
+        <result column="web_ok_percent" property="webOkPercent"/>
+        <result column="back_type" property="backType"/>
+        <result column="back_state" property="backState"/>
+    </resultMap>
+</mapper>

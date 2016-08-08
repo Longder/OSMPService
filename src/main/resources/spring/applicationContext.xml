@@ -24,6 +24,6 @@
     </bean>
     <!--Mybatis DAO扫描-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.yuntuofu.enterpriseshow.dao"/>
+        <property name="basePackage" value="com.microdata.osmpservice.dao"/>
     </bean>
 </beans>

@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.microdata.osmpservice.dao.UserDao">
-    <select id="findByUserId" parameterType="string">
-      SELECT * FROM sys_user WHERE user_id = #{userId}
+    <select id="findByUserId" parameterType="string" resultMap="userMap">
+      SELECT * FROM sys_users WHERE user_id = #{userId}
     </select>
     <!--结果集映射-->
-    <resultMap id="userMap" type="com.microdata.osmpservice.entity.User">
+    <resultMap id="userMap" type="com.microdata.osmpservice.entity.po.User">
         <result column="user_id" property="userId"/>
         <result column="user_name" property="username"/>
         <result column="dept_id" property="deptId"/>
