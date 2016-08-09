@@ -1,6 +1,7 @@
 package com.microdata.osmpservice.service;
 
 import com.microdata.osmpservice.entity.PMSResult;
+import com.microdata.osmpservice.entity.po.User;
 
 /**
  * Created by Longder on 2016/8/8.
@@ -8,8 +9,8 @@ import com.microdata.osmpservice.entity.PMSResult;
 public interface UserService {
     /**
      * 用户登录校验
-     * @param userInfo json字符串
+     * @param loginUser json字符串
      * @return
      */
-    PMSResult loginCheck(String userInfo);
+    PMSResult loginCheck(User loginUser);
 }
