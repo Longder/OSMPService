@@ -15,15 +15,13 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class LoggerBean {
     private static StringBuilder builder = new StringBuilder();
-    private static  Logger logger;
+    private static  Logger logger = LogManager.getLogger(LoggerBean.class);
 
     @Before("within(com.microdata.osmpservice.controller..*)")
     public void preController(JoinPoint joinPoint) {
-
         String targetName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         String info = createLogInfo(targetName, methodName);
-        logger = LogManager.getLogger(targetName);
         logger.info(info);
         //清空builder
         builder.setLength(0);

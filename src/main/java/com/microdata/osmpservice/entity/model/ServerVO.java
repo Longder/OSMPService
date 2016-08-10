@@ -1,12 +1,13 @@
 package com.microdata.osmpservice.entity.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * 返回到APP的服务器列表对象，只封装需要显示的信息
  * Created by Longder on 2016/8/8.
  */
-public class ServerVO {
+public class ServerVO implements Serializable {
     /**
      * 服务器名称
      */
@@ -18,7 +19,7 @@ public class ServerVO {
     /**
      * 启动时间
      */
-    private Date startDate;
+    private Timestamp startDate;
     /**
      * 状态
      */
@@ -40,11 +41,11 @@ public class ServerVO {
         this.ip = ip;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
