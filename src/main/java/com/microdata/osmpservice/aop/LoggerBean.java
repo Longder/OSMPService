@@ -1,7 +1,8 @@
 package com.microdata.osmpservice.aop;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class LoggerBean {
     private static StringBuilder builder = new StringBuilder();
-    private static  Logger logger = LogManager.getLogger(LoggerBean.class);
+    private static Logger logger = LogManager.getLogger(LoggerBean.class);
 
     @Before("within(com.microdata.osmpservice.controller..*)")
     public void preController(JoinPoint joinPoint) {

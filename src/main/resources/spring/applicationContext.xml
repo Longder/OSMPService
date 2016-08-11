@@ -11,7 +11,7 @@
     <!--数据库链接配置文件-->
     <util:properties id="dbProps" location="classpath:db.properties"/>
     <!--dbcp连接池-->
-    <bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+    <bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="#{dbProps.driverName}"/>
         <property name="url" value="#{dbProps.url}"/>
         <property name="username" value="#{dbProps.username}"/>

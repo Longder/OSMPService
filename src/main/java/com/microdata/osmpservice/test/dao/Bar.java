@@ -1,7 +1,8 @@
 package com.microdata.osmpservice.test.dao;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * Created by Longder on 2016/8/9.
@@ -12,6 +13,6 @@ public class Bar {
     public boolean doIt() {
         logger.trace("doIt");
         logger.error("Did it again!");
-        return logger.traceExit(false);
+        return false;
     }
 }
