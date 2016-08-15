@@ -12,5 +12,11 @@ import java.util.Map;
  */
 @Repository
 public interface ServerDao {
-    List<ServerVO> findByCondition(Map<String,Object> conditionMap);
+    /**
+     * 多条件查询服务器信息
+     *
+     * @param conditionMap 条件map
+     * @return 服务器列表（封装好的需要显示在APP页面的数据）
+     */
+    List<ServerVO> findByCondition(Map<String, Object> conditionMap);
 }

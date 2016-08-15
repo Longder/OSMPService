@@ -69,7 +69,6 @@
             <version>1.8.6</version>
         </dependency>
     </dependencies>
-
     <build>
         <finalName>OSMPService</finalName>
     </build>

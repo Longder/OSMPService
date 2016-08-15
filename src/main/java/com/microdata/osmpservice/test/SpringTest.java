@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.*;
+import java.net.Socket;
 import java.util.UUID;
 
 /**
@@ -33,5 +35,9 @@ public class SpringTest {
     public void testUUID(){
         UUID uuid = UUID.randomUUID();
         System.out.println(uuid);
+    }
+    @Test
+    public void testSocket(){
+
     }
 }
