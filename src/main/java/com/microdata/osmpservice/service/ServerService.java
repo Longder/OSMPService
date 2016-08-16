@@ -12,10 +12,18 @@ public interface ServerService {
     /**
      * 加载服务器信息列表
      *
-     * @param page 页数
+     * @param page     页数
      * @param pageSize 页容量
      * @param category 类别
      * @return
      */
     PMSResult loadServerList(String page, String pageSize, String category);
+
+    /**
+     * 根据IP实时加载服务器详情
+     *
+     * @param ip ip地址
+     * @return
+     */
+    PMSResult loadServerDetailRealTime(String ip);
 }

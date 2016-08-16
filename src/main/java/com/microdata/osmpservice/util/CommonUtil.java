@@ -1,10 +1,9 @@
 package com.microdata.osmpservice.util;
 
-import com.microdata.osmpservice.entity.PMSResult;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.List;
 
@@ -48,13 +47,20 @@ public class CommonUtil {
         Socket client = null;
         String info = "0";
         try {
-            client = new Socket(ip, PMS_PORT);
-            final DataOutputStream out = new DataOutputStream(client.getOutputStream());
-            out.writeUTF(order);
-            DataInputStream in = new DataInputStream(client.getInputStream());
-            info = in.readUTF();
-            out.close();
-            in.close();
+            //先pingip
+            boolean status = InetAddress.getByName(ip).isReachable(1000);
+            if(!status){
+                info = "0";
+            }else{
+                client = new Socket(ip, PMS_PORT);
+                client.setSoTimeout(5000);
+                final DataOutputStream out = new DataOutputStream(client.getOutputStream());
+                out.writeUTF(order);
+                DataInputStream in = new DataInputStream(client.getInputStream());
+                info = in.readUTF();
+                out.close();
+                in.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             info = "0";

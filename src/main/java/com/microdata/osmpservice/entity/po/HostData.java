@@ -1,10 +1,12 @@
 package com.microdata.osmpservice.entity.po;
 
+import java.io.Serializable;
+
 /**
  * 对应数据库中pms_host_data表
  * Created by Longder on 2016/8/8.
  */
-public class HostData {
+public class HostData implements Serializable{
     /**
      * ip地址
      */

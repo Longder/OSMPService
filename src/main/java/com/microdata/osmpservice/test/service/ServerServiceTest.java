@@ -20,8 +20,8 @@ public class ServerServiceTest {
     @Test
     public void testLoadServerList() {
         String page = "1";
-        String pageSize = "2";
-        String category = "Linux";
+        String pageSize = "3";
+        String category = null;
         PMSResult result = serverService.loadServerList(page, pageSize, category);
         System.out.println(result);
     }

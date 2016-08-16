@@ -5,11 +5,8 @@
 <mapper namespace="com.microdata.osmpservice.dao.ServerDao">
     <select id="findByCondition" resultType="com.microdata.osmpservice.entity.model.ServerVO"
             parameterType="java.util.Map">
-        SELECT h.ip ip,h.host_name serverName,sd.server_status status
+        SELECT h.ip ip,h.host_name serverName
         FROM pms_host h
-        LEFT JOIN (SELECT MAX(server_time),ip,server_status
-        FROM pms_server_data GROUP BY ip,server_status)
-        AS sd ON sd.ip = h.ip
         <where>
             <if test="category!=null and category!=''">
                 AND h.host_lx=#{category}

@@ -19,7 +19,7 @@ public class ServerVO implements Serializable {
     /**
      * 启动时间
      */
-    private Timestamp startDate;
+    private String startTime;
     /**
      * 状态
      */
@@ -41,12 +41,12 @@ public class ServerVO implements Serializable {
         this.ip = ip;
     }
 
-    public Timestamp getStartDate() {
-        return startDate;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getStatus() {
