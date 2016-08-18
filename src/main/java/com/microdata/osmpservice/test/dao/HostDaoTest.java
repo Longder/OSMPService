@@ -2,6 +2,7 @@ package com.microdata.osmpservice.test.dao;
 
 import com.microdata.osmpservice.dao.HostDao;
 import com.microdata.osmpservice.entity.po.Host;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,5 +24,11 @@ public class HostDaoTest {
     public void testFindAll() {
         List<Host> hostList = hostDao.findAll();
         System.out.println("集合长度：" + hostList.size());
+    }
+
+    @Test
+    public void testFindByIpj() {
+        Host host = hostDao.findByIp("192.168.1.87");
+        Assert.assertNotNull(host);
     }
 }

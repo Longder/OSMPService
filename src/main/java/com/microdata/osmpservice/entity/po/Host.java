@@ -22,7 +22,7 @@ public class Host {
      */
     private String function;
     /**
-     * 主机类别
+     * 主机类别（Windows,Linux）
      */
     private String category;
     /**

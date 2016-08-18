@@ -1,14 +1,11 @@
 package com.microdata.osmpservice.test;
 
 import com.microdata.osmpservice.constant.SocketOrder;
-import com.microdata.osmpservice.entity.socket.HostInfo;
-import com.microdata.osmpservice.test.dao.Bar;
-import com.microdata.osmpservice.util.CommonUtil;
+import com.microdata.osmpservice.util.SocketUtil;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.*;
-import java.net.Socket;
+import java.util.Map;
 
 
 /**
@@ -24,9 +21,8 @@ public class Log4jTest {
             logger.error("Didn't do it.");
         }
         logger.trace("Exiting application.");*/
-        String info = CommonUtil.getHostInfo("192.168.1.79", SocketOrder.GET_WORK_STATION_INFO);
+        String info = SocketUtil.getHostInfo("192.168.1.87",SocketOrder.GET_V_MEMORY_PERCENT);
         //HostInfo host = new HostInfo(info);
         System.out.println(info);
-
     }
 }

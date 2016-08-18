@@ -6,12 +6,15 @@
     <select id="findAll" resultMap="hostMap">
       SELECT * FROM pms_host
     </select>
+    <select id="findByIp" resultMap="hostMap" parameterType="string">
+      SELECT * FROM pms_host WHERE ip=#{ip}
+    </select>
     <resultMap id="hostMap" type="com.microdata.osmpservice.entity.po.Host">
         <result column="id" property="id"/>
         <result column="ip" property="ip"/>
         <result column="host_name" property="hostName"/>
         <result column="host_lb" property="function"/>
         <result column="host_lx" property="category"/>
-        <result column="chooseFlag" property="xybz"/>
+        <result column="xybz" property="chooseFlag"/>
     </resultMap>
 </mapper>

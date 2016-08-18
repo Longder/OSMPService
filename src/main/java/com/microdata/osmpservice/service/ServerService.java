@@ -26,4 +26,12 @@ public interface ServerService {
      * @return
      */
     PMSResult loadServerDetailRealTime(String ip);
+
+    /**
+     * 根据IP实时加载内存详情
+     *
+     * @param ip
+     * @return
+     */
+    PMSResult loadMemoryDetailRealTime(String ip);
 }

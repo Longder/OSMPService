@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Longder on 2016/8/8.
  */
 @Component
-public class PMSResult implements Serializable{
+public class PMSResult implements Serializable {
     private Integer status;
     private String message;
     private Object data;
@@ -36,5 +36,15 @@ public class PMSResult implements Serializable{
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PMSResult{");
+        sb.append("status=").append(status);
+        sb.append(", message='").append(message).append('\'');
+        sb.append(", data=").append(data);
+        sb.append('}');
+        return sb.toString();
     }
 }

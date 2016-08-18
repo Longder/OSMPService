@@ -5,6 +5,7 @@ import com.microdata.osmpservice.entity.PMSResult;
 import com.microdata.osmpservice.entity.po.User;
 import com.microdata.osmpservice.service.UserService;
 import com.microdata.osmpservice.util.CommonUtil;
+import com.microdata.osmpservice.util.SocketUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
      */
     public PMSResult loginCheck(User loginUser) {
         if(loginUser==null|| CommonUtil.checkStringNullOrEmpty(loginUser.getUserId())
-                ||CommonUtil.checkStringNullOrEmpty(loginUser.getPassword())){
+                || CommonUtil.checkStringNullOrEmpty(loginUser.getPassword())){
             pmsResult.setStatus(3);
             pmsResult.setMessage("信息发送有误");
             pmsResult.setData(null);

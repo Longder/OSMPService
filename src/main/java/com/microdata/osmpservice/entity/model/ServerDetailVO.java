@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Longder on 2016/8/15.
  */
-public class ServerDetailVO implements Serializable{
+public class ServerDetailVO implements Serializable {
     /**
      * 剩余内存（带单位）
      */
@@ -13,11 +13,11 @@ public class ServerDetailVO implements Serializable{
     /**
      * 剩余硬盘容量（带单位）
      */
-    private String freeDisk;
+    private String freeStorage;
     /**
      * 内存占用率（保留一位小数）
      */
-    private Double memoryRate;
+    private String memoryRate;
     /**
      * CPU占用率（保留一位小数）
      */
@@ -31,19 +31,19 @@ public class ServerDetailVO implements Serializable{
         this.freeMemory = freeMemory;
     }
 
-    public String getFreeDisk() {
-        return freeDisk;
+    public String getFreeStorage() {
+        return freeStorage;
     }
 
-    public void setFreeDisk(String freeDisk) {
-        this.freeDisk = freeDisk;
+    public void setFreeStorage(String freeStorage) {
+        this.freeStorage = freeStorage;
     }
 
-    public Double getMemoryRate() {
+    public String getMemoryRate() {
         return memoryRate;
     }
 
-    public void setMemoryRate(Double memoryRate) {
+    public void setMemoryRate(String memoryRate) {
         this.memoryRate = memoryRate;
     }
 

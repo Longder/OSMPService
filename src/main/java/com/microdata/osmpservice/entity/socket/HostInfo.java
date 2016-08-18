@@ -50,7 +50,11 @@ public class HostInfo implements Serializable {
     /**
      * 磁盘总容量（带单位）
      */
-    private String totalDisk;
+    private String totalStorage;
+    /**
+     * 是否填充数据成功 true代表成功 false代表失败
+     */
+    private boolean fillSuccess;
 
     public HostInfo() {
     }
@@ -63,18 +67,23 @@ public class HostInfo implements Serializable {
      * 初始化主机信息实体
      */
     public void initHostInfo(String hostInfo) {
-        String[] info = hostInfo.split("<string>");
-        this.hostName = info[0];
-        this.manufacturer = info[1];
-        this.model = info[2];
-        this.serialNumber = info[3];
-        this.cpuName = info[4];
-        this.cpuCoreNumber = info[5];
-        this.cpuFrequency = info[6];
-        this.os = info[7];
-        this.osVersion = info[8];
-        this.totalMemory = info[9];
-        this.totalDisk = info[10];
+        if ("0".equals(hostInfo)) {
+            this.fillSuccess = false;
+        }else{
+            String[] info = hostInfo.split("<string>");
+            this.hostName = info[0];
+            this.manufacturer = info[1];
+            this.model = info[2];
+            this.serialNumber = info[3];
+            this.cpuName = info[4];
+            this.cpuCoreNumber = info[5];
+            this.cpuFrequency = info[6];
+            this.os = info[7];
+            this.osVersion = info[8];
+            this.totalMemory = info[9];
+            this.totalStorage = info[10];
+            this.fillSuccess = true;
+        }
     }
 
     public String getHostName() {
@@ -157,11 +166,19 @@ public class HostInfo implements Serializable {
         this.totalMemory = totalMemory;
     }
 
-    public String getTotalDisk() {
-        return totalDisk;
+    public String getTotalStorage() {
+        return totalStorage;
     }
 
-    public void setTotalDisk(String totalDisk) {
-        this.totalDisk = totalDisk;
+    public void setTotalStorage(String totalStorage) {
+        this.totalStorage = totalStorage;
+    }
+
+    public boolean isFillSuccess() {
+        return fillSuccess;
+    }
+
+    public void setFillSuccess(boolean fillSuccess) {
+        this.fillSuccess = fillSuccess;
     }
 }

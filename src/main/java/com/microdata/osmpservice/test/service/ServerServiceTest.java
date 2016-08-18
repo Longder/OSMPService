@@ -17,12 +17,19 @@ import javax.annotation.Resource;
 public class ServerServiceTest {
     @Resource
     private ServerService serverService;
+
     @Test
     public void testLoadServerList() {
         String page = "1";
         String pageSize = "3";
         String category = null;
         PMSResult result = serverService.loadServerList(page, pageSize, category);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testLoadServerDetail() {
+        PMSResult result = serverService.loadServerDetailRealTime("192.168.1.87");
         System.out.println(result);
     }
 }

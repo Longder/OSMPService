@@ -17,10 +17,34 @@ public class ServerController {
     @Resource
     private ServerService serverService;
 
+    /**
+     * 分页加载服务器列表详情
+     *
+     * @param page     页数
+     * @param pageSize 页容量
+     * @param category 服务器类别
+     * @return
+     */
     @RequestMapping(value = "/list")
-    public PMSResult list(@RequestParam(value = "page",defaultValue = "1") String page,
-                          @RequestParam(value = "pageSize",defaultValue = "5") String pageSize,
-                          @RequestParam(value = "category",defaultValue = "") String category) {
+    public PMSResult list(@RequestParam(value = "page", defaultValue = "1") String page,
+                          @RequestParam(value = "pageSize", defaultValue = "5") String pageSize,
+                          @RequestParam(value = "category", defaultValue = "") String category) {
         return serverService.loadServerList(page, pageSize, category);
+    }
+
+    /**
+     * 根据ip加载服务器实时详情
+     *
+     * @param ip IP地址
+     * @return
+     */
+    @RequestMapping(value = "/detail")
+    public PMSResult serverDetail(@RequestParam(value = "ip") String ip) {
+        return serverService.loadServerDetailRealTime(ip);
+    }
+
+    @RequestMapping(value = "/memory")
+    public PMSResult memoryDetail(@RequestParam(value = "ip") String ip) {
+        return serverService.loadMemoryDetailRealTime(ip);
     }
 }

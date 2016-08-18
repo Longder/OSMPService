@@ -19,4 +19,5 @@ public interface ServerDao {
      * @return 服务器列表（封装好的需要显示在APP页面的数据）
      */
     List<ServerVO> findByCondition(Map<String, Object> conditionMap);
+
 }

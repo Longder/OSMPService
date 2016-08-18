@@ -18,6 +18,10 @@ public final class SocketOrder {
      */
     public static final String GET_WORK_STATION_INFO = "getWorkStationInfo";
     /**
+     * 获取内存总量
+     */
+    public static final String GET_MEMORY_SIZE = "getMemorySize";
+    /**
      * 获取内存使用百分比
      */
     public static final String GET_MEMORY_PERCENT = "getMemoryPercent";
@@ -29,4 +33,12 @@ public final class SocketOrder {
      * 获取CPU使用百分比
      */
     public static final String GET_CPU_PERCENT = "getCPUPercent";
+    /**
+     * 获取虚拟内存总量
+     */
+    public static final String GET_V_MEMORY_SIZE = "getVMemorySize";
+    /**
+     * 获取虚拟内存使用百分比
+     */
+    public static final String GET_V_MEMORY_PERCENT = "getVMemoryPercent";
 }
