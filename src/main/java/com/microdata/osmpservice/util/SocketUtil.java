@@ -20,7 +20,7 @@ public class SocketUtil {
     /**
      * PMS端口号
      */
-    private static final int PMS_PORT = 12345;
+    public static final int PMS_PORT = 12345;
     /**
      * 小数格式化工具，默认保留一位小数
      */
@@ -44,46 +44,11 @@ public class SocketUtil {
     public static final int V_MEMORY_RATE = 1;
     public static final int FREE_V_MEMORY = 2;
     public static final int USED_V_MEMORY = 3;
-    public static Socket client = null;
     /**
      * 根据指令动态获取主机信息
      *
      * @return
      */
-    public static String getHostInfo(String ip, String order) {
-        String info = "0";
-        try {
-/*            //先pingip
-            boolean status = InetAddress.getByName(ip).isReachable(3000);
-            if (!status) {
-                info = "0";
-            } else {*/
-            if(client==null){
-                client = new Socket(ip,PMS_PORT);
-            }
-            //client.setSoTimeout(5000);
-            final DataOutputStream out = new DataOutputStream(client.getOutputStream());
-            out.writeUTF(order);
-            DataInputStream in = new DataInputStream(client.getInputStream());
-            info = in.readUTF();
-/*            out.close();
-            in.close();*/
-            //}
-        } catch (Exception e) {
-            e.printStackTrace();
-            info = "0";
-        } finally {
-/*            if (client != null) {
-                try {
-                    client.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    info = "0";
-                }
-            }*/
-        }
-        return info;
-    }
 
     /**
      * 根据IP获取CPU实时占用百分比(不带单位)
@@ -91,7 +56,7 @@ public class SocketUtil {
      * @return
      */
     public static Double getCPURate(String ip) {
-        String cpuPercent = getHostInfo(ip, SocketOrder.GET_CPU_PERCENT);
+        String cpuPercent = SocketConnectionHandler.getInfo(ip, SocketOrder.GET_CPU_PERCENT);
         if (!"0".equals(cpuPercent)) {
             return Double.parseDouble(DECIMAL_FORMAT.format(Double.parseDouble(cpuPercent)));
         } else {
@@ -104,9 +69,9 @@ public class SocketUtil {
      */
     public static Map<Integer, String> getMemoryDetail(String ip) {
         //总内存
-        String totalMemory = getHostInfo(ip, SocketOrder.GET_MEMORY_SIZE);
+        String totalMemory = SocketConnectionHandler.getInfo(ip, SocketOrder.GET_MEMORY_SIZE);
         //内存使用率
-        String memoryRate = getHostInfo(ip, SocketOrder.GET_MEMORY_PERCENT);
+        String memoryRate = SocketConnectionHandler.getInfo(ip, SocketOrder.GET_MEMORY_PERCENT);
         //剩余内存
         String freeMemory = getResidualCapacity(totalMemory, memoryRate);
         //已用内存
@@ -124,9 +89,9 @@ public class SocketUtil {
      */
     public static Map<Integer, String> getVMemoryDetail(String ip) {
         //总虚拟内存
-        String totalVMemory = getHostInfo(ip, SocketOrder.GET_V_MEMORY_SIZE);
+        String totalVMemory = SocketConnectionHandler.getInfo(ip, SocketOrder.GET_V_MEMORY_SIZE);
         //虚拟内存使用率
-        String vMemoryRate = getHostInfo(ip, SocketOrder.GET_V_MEMORY_PERCENT);
+        String vMemoryRate = SocketConnectionHandler.getInfo(ip, SocketOrder.GET_V_MEMORY_PERCENT);
         //剩余内存
         String freeVMemory = getResidualCapacity(totalVMemory, vMemoryRate);
         //已用虚拟内存

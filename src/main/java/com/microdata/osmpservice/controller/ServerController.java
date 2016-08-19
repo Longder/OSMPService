@@ -47,4 +47,16 @@ public class ServerController {
     public PMSResult memoryDetail(@RequestParam(value = "ip") String ip) {
         return serverService.loadMemoryDetailRealTime(ip);
     }
+
+    /**
+     * 加载服务器历史数据
+     * @param ip
+     * @return
+     */
+    @RequestMapping(value = "/history")
+    public PMSResult serverHistory(@RequestParam(value = "ip")String ip,
+                                   @RequestParam(value = "startDate")String startDate,
+                                   @RequestParam(value = "endDate")String endDate) {
+        return serverService.loadServerHistory(ip,startDate,endDate);
+    }
 }

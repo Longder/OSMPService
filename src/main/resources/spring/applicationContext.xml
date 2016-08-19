@@ -33,5 +33,4 @@
         <property name="dataSource" ref="basicDataSource"/>
     </bean>
     <tx:annotation-driven transaction-manager="txManager"/>
-
 </beans>

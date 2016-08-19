@@ -34,4 +34,11 @@ public interface ServerService {
      * @return
      */
     PMSResult loadMemoryDetailRealTime(String ip);
+
+    /**
+     * 加载服务器历史数据
+     * @param ip
+     * @return
+     */
+    PMSResult loadServerHistory(String ip,String startDate,String endDate);
 }

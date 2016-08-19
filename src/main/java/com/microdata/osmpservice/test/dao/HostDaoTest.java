@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.net.Socket;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ import java.util.List;
 public class HostDaoTest {
     @Resource
     private HostDao hostDao;
-
+    @Resource(name = "pmsSocket")
+    private Socket socket;
     @Test
     public void testFindAll() {
         List<Host> hostList = hostDao.findAll();
@@ -30,5 +32,10 @@ public class HostDaoTest {
     public void testFindByIpj() {
         Host host = hostDao.findByIp("192.168.1.87");
         Assert.assertNotNull(host);
+    }
+
+    @Test
+    public void testSpringSocket() {
+        System.out.println(socket);
     }
 }

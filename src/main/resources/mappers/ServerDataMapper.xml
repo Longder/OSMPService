@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microdata.osmpservice.dao.ServerDataDao">
+    <select id="findByIpAndTime" parameterType="java.util.Map" resultMap="serverDataMap">
+        SELECT ip,date_format(server_time,'%Y-%m-%d %T') server_time,server_cpu,
+                server_memory,server_io_r,server_io_w,
+                server_v_memory,server_storage,server_status
+         FROM pms_server_data
+        <where>
+            <if test="ip!=null and name!=''">
+                AND ip=#{ip}
+            </if>
+            <if test="startDate!=null">
+                AND server_time <![CDATA[>=]]> #{startDate}
+            </if>
+            <if test="endDate!=null">
+                AND server_time <![CDATA[<=]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <resultMap id="serverDataMap" type="com.microdata.osmpservice.entity.po.ServerData">
+        <result column="ip" property="ip"/>
+        <result column="server_time" property="time"/>
+        <result column="server_cpu" property="cpuRate"/>
+        <result column="server_memory" property="memoryRate"/>
+        <result column="server_io_r" property="ioReadRate"/>
+        <result column="server_io_w" property="ioWriteRate"/>
+        <result column="server_v_memory" property="virtualMemoryRate"/>
+        <result column="server_storage" property="storageRate"/>
+        <result column="server_status" property="status"/>
+    </resultMap>
+</mapper>
