@@ -1,13 +1,12 @@
 package com.microdata.osmpservice.service.impl;
 
 import com.microdata.osmpservice.constant.SocketOrder;
+import com.microdata.osmpservice.dao.AlarmDataDao;
 import com.microdata.osmpservice.dao.HostDao;
 import com.microdata.osmpservice.dao.ServerDao;
 import com.microdata.osmpservice.dao.ServerDataDao;
 import com.microdata.osmpservice.entity.PMSResult;
-import com.microdata.osmpservice.entity.model.MemoryDetailVO;
-import com.microdata.osmpservice.entity.model.ServerDetailVO;
-import com.microdata.osmpservice.entity.model.ServerVO;
+import com.microdata.osmpservice.entity.model.*;
 import com.microdata.osmpservice.entity.po.Host;
 import com.microdata.osmpservice.entity.po.ServerData;
 import com.microdata.osmpservice.entity.socket.HostInfo;
@@ -37,6 +36,8 @@ public class ServerServiceImpl implements ServerService {
     private HostDao hostDao;
     @Resource
     private ServerDataDao serverDataDao;
+    @Resource
+    private AlarmDataDao alarmDataDao;
 
     /**
      * 加载服务器信息列表
@@ -47,36 +48,21 @@ public class ServerServiceImpl implements ServerService {
      * @return
      */
     public PMSResult loadServerList(String page, String pageSize, String category) {
-        try {
-            if (StringUtils.isEmpty(page) || StringUtils.isEmpty(pageSize)) {
-                pmsResult.setStatus(1);
-                pmsResult.setMessage("分页参数有误");
-                pmsResult.setData(null);
-                return pmsResult;
-            }
-            //计算mybatis分页因子
-            //根据每页显示条数和当前页计算mybatis分页因子
-            int start = Integer.parseInt(pageSize) * Integer.parseInt(page) - Integer.parseInt(pageSize);
-            int limit = Integer.parseInt(pageSize);
-            //构建查询Map
-            Map<String, Object> conditionMap = new HashMap<String, Object>();
-            conditionMap.put("category", category);
-            conditionMap.put("start", start);
-            conditionMap.put("limit", limit);
-            List<ServerVO> serverVOList = serverDao.findByCondition(conditionMap);
-            if (CommonUtil.checkListNullOrEmpty(serverVOList)) {
-                pmsResult.setStatus(2);
-                pmsResult.setMessage("该页没有数据");
-                pmsResult.setData(null);
-            } else {
-                //构建状态和启动时间数据
-                serverVOList = fillRealTimeInfo(serverVOList);
-                pmsResult.setStatus(0);
-                pmsResult.setMessage("查询成功");
-                pmsResult.setData(serverVOList);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        //计算mybatis分页因子
+        Map<String, Object> conditionMap = createMybatisPageInfo(page, pageSize);
+        //构建查询Map
+        conditionMap.put("category", category);
+        List<ServerVO> serverVOList = serverDao.findByCondition(conditionMap);
+        if (CommonUtil.checkListNullOrEmpty(serverVOList)) {
+            pmsResult.setStatus(2);
+            pmsResult.setMessage("该页没有数据");
+            pmsResult.setData(null);
+        } else {
+            //构建状态和启动时间数据
+            serverVOList = fillRealTimeInfo(serverVOList);
+            pmsResult.setStatus(0);
+            pmsResult.setMessage("查询成功");
+            pmsResult.setData(serverVOList);
         }
         return pmsResult;
     }
@@ -88,24 +74,9 @@ public class ServerServiceImpl implements ServerService {
      * @return
      */
     public PMSResult loadServerDetailRealTime(String ip) {
-        //先查询出此ip的主机信息
-        Host host = hostDao.findByIp(ip);
-        if (host == null) {
-            pmsResult.setStatus(1);
-            pmsResult.setMessage("此IP没有对应服务器");
-            pmsResult.setData(null);
-            return pmsResult;
-        }
         //判断主机的类型来进行获取数据
-        HostInfo hostInfo;
+        HostInfo hostInfo = getHostInfo(ip);
         ServerDetailVO serverDetail = new ServerDetailVO();
-        if ("Windows".equals(host.getCategory())) {
-            hostInfo = new HostInfo(SocketConnectionHandler.getInfo(ip, SocketOrder.GET_WINDOWS_HOST_INFO));
-        } else if ("Linux".equals(host.getCategory())) {
-            hostInfo = new HostInfo(SocketConnectionHandler.getInfo(ip, SocketOrder.GET_LINUX_HOST_INFO));
-        } else {
-            hostInfo = new HostInfo("0");
-        }
         //判断是否获取成功
         if (hostInfo.isFillSuccess()) {
             Map<Integer, String> memoryInfo = SocketUtil.getMemoryDetail(ip);
@@ -193,20 +164,75 @@ public class ServerServiceImpl implements ServerService {
     }
 
     /**
+     * 根据IP实时加载CPU详情
+     *
+     * @param ip
+     * @return
+     */
+    @Override
+    public PMSResult loadCPUDetailRealTime(String ip) {
+        //判断主机的类型来进行获取数据
+        HostInfo hostInfo = getHostInfo(ip);
+        //判断是否填充成功
+        if (hostInfo.isFillSuccess()) {
+            CPUDetailVO cpuDetailVO = new CPUDetailVO();
+            cpuDetailVO.setModel(hostInfo.getCpuName());
+            cpuDetailVO.setFrequency(hostInfo.getCpuFrequency());
+            //实时信息
+            Double usedRate = SocketUtil.getCPURate(ip);
+            Double freeRate = 100 - usedRate;
+            cpuDetailVO.setUsedRate(String.valueOf(usedRate));
+            cpuDetailVO.setFreeRate(String.valueOf(freeRate));
+            pmsResult.setStatus(0);
+            pmsResult.setMessage("获取成功");
+            pmsResult.setData(cpuDetailVO);
+        } else {
+            pmsResult.setStatus(2);
+            pmsResult.setMessage("此IP下服务器异常");
+            pmsResult.setData(null);
+        }
+        return pmsResult;
+    }
+
+    /**
+     * 根据ip，分页信息加载服务器告警信息
+     *
+     * @param ip
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PMSResult loadAlarmData(String ip, String page, String pageSize) {
+        //计算mybatis分页因子
+        Map<String, Object> conditionMap = createMybatisPageInfo(page, pageSize);
+        //构建查询Map
+        conditionMap.put("ip", ip);
+        List<AlarmDataVO> list = alarmDataDao.findByCondition(conditionMap);
+        if (CommonUtil.checkListNullOrEmpty(list)) {
+            pmsResult.setStatus(2);
+            pmsResult.setMessage("该页没有数据");
+            pmsResult.setData(null);
+        } else {
+            pmsResult.setStatus(0);
+            pmsResult.setMessage("查询成功");
+            pmsResult.setData(list);
+        }
+        return pmsResult;
+    }
+
+    /**
      * 构建服务器列表集合中的实时信息（status和startDate）
      *
      * @param list
      * @return
      */
-    private List<ServerVO> fillRealTimeInfo(List<ServerVO> list) throws PMSException {
+    private List<ServerVO> fillRealTimeInfo(List<ServerVO> list) {
         //主机信息
         HostInfo hostInfo = new HostInfo();
         for (ServerVO server : list) {
-            String info = SocketConnectionHandler.getInfo(server.getIp(), SocketOrder.GET_WINDOWS_HOST_INFO);
-            //如果获取不到实时信息，状态为0，启动时间为null
-            if ("0".equals(info)) {
-                server.setStatus("0");
-            } else {
+            try {
+                String info = SocketConnectionHandler.getInfo(server.getIp(), SocketOrder.GET_WINDOWS_HOST_INFO);
                 hostInfo.initHostInfo(info);
                 //处理启动时间
                 String workStationInfo = SocketConnectionHandler.getInfo(server.getIp(), SocketOrder.GET_WORK_STATION_INFO);
@@ -218,8 +244,58 @@ public class ServerServiceImpl implements ServerService {
                     server.setStatus("1");
                     server.setStartTime(startTime);
                 }
+            } catch (PMSException e) {
+                server.setStatus("0");
             }
+            //如果获取不到实时信息，状态为0，启动时间为null
         }
         return list;
     }
+
+    /**
+     * 根据ip获取主机数据（实时），封装成HostInfo实体
+     * 如果获取失败，返回null
+     *
+     * @param ip
+     * @return
+     */
+    private HostInfo getHostInfo(String ip) {
+        //先查询出此ip的主机信息
+        Host host = hostDao.findByIp(ip);
+        if (host == null) {
+            return new HostInfo("0");
+        }
+        //判断主机的类型来进行获取数据
+        HostInfo hostInfo;
+        try {
+            if ("Windows".equals(host.getCategory())) {
+                hostInfo = new HostInfo(SocketConnectionHandler.getInfo(ip, SocketOrder.GET_WINDOWS_HOST_INFO));
+            } else if ("Linux".equals(host.getCategory())) {
+                hostInfo = new HostInfo(SocketConnectionHandler.getInfo(ip, SocketOrder.GET_LINUX_HOST_INFO));
+            } else {
+                hostInfo = new HostInfo("0");
+            }
+        } catch (PMSException e) {
+            hostInfo = new HostInfo("0");
+        }
+        return hostInfo;
+    }
+
+    /**
+     * 构建mybatis分页因子（start,limit）封装到map中返回
+     *
+     * @return
+     */
+    private Map<String, Object> createMybatisPageInfo(String page, String pageSize) {
+        //计算mybatis分页因子
+        //根据每页显示条数和当前页计算mybatis分页因子
+        int start = Integer.parseInt(pageSize) * Integer.parseInt(page) - Integer.parseInt(pageSize);
+        int limit = Integer.parseInt(pageSize);
+        //构建Map
+        Map<String, Object> pageMap = new HashMap<String, Object>();
+        pageMap.put("start", start);
+        pageMap.put("limit", limit);
+        return pageMap;
+    }
+
 }

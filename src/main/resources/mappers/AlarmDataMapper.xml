@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microdata.osmpservice.dao.AlarmDataDao">
+    <select id="findByCondition" parameterType="java.util.Map" resultMap="alarmDataVoMap">
+        SELECT alarm_zt,ip,alarm_type,alarm_cxsj,alarm_time,alarm_info FROM pms_alarm_data
+        <where>
+            <if test="ip!=null and name!=''">
+                AND ip=#{ip}
+            </if>
+        </where>
+        LIMIT #{start},#{limit}
+    </select>
+    <resultMap id="alarmDataVoMap" type="com.microdata.osmpservice.entity.model.AlarmDataVO">
+        <result column="alarm_zt" property="state"/>
+        <result column="ip" property="ip"/>
+        <result column="alarm_type" property="type"/>
+        <result column="alarm_cxsj" property="durationTime"/>
+        <result column="alarm_time" property="time"/>
+        <result column="alarm_info" property="info"/>
+    </resultMap>
+</mapper>

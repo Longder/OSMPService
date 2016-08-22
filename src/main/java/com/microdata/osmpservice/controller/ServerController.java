@@ -43,6 +43,12 @@ public class ServerController {
         return serverService.loadServerDetailRealTime(ip);
     }
 
+    /**
+     * 根据IP加载服务器内存详情
+     *
+     * @param ip
+     * @return
+     */
     @RequestMapping(value = "/memory")
     public PMSResult memoryDetail(@RequestParam(value = "ip") String ip) {
         return serverService.loadMemoryDetailRealTime(ip);
@@ -50,13 +56,40 @@ public class ServerController {
 
     /**
      * 加载服务器历史数据
+     *
      * @param ip
      * @return
      */
     @RequestMapping(value = "/history")
-    public PMSResult serverHistory(@RequestParam(value = "ip")String ip,
-                                   @RequestParam(value = "startDate")String startDate,
-                                   @RequestParam(value = "endDate")String endDate) {
-        return serverService.loadServerHistory(ip,startDate,endDate);
+    public PMSResult serverHistory(@RequestParam(value = "ip") String ip,
+                                   @RequestParam(value = "startDate") String startDate,
+                                   @RequestParam(value = "endDate") String endDate) {
+        return serverService.loadServerHistory(ip, startDate, endDate);
+    }
+
+    /**
+     * 加载CPU实时信息
+     *
+     * @param ip
+     * @return
+     */
+    @RequestMapping(value = "/cpu")
+    public PMSResult cpuDetail(@RequestParam(value = "ip") String ip) {
+        return serverService.loadCPUDetailRealTime(ip);
+    }
+
+    /**
+     * 分页加载服务器告警信息
+     *
+     * @param ip
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/alarm")
+    public PMSResult alarmData(@RequestParam(value = "ip") String ip,
+                               @RequestParam(value = "page", defaultValue = "1") String page,
+                               @RequestParam(value = "pageSize", defaultValue = "3") String pageSize) {
+        return serverService.loadAlarmData(ip, page, pageSize);
     }
 }

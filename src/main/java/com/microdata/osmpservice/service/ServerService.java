@@ -1,9 +1,6 @@
 package com.microdata.osmpservice.service;
 
 import com.microdata.osmpservice.entity.PMSResult;
-import com.microdata.osmpservice.entity.model.ServerVO;
-
-import java.util.List;
 
 /**
  * Created by Longder on 2016/8/10.
@@ -37,8 +34,27 @@ public interface ServerService {
 
     /**
      * 加载服务器历史数据
+     *
      * @param ip
      * @return
      */
-    PMSResult loadServerHistory(String ip,String startDate,String endDate);
+    PMSResult loadServerHistory(String ip, String startDate, String endDate);
+
+    /**
+     * 根据IP实时加载CPU详情
+     *
+     * @param ip
+     * @return
+     */
+    PMSResult loadCPUDetailRealTime(String ip);
+
+    /**
+     * 根据ip，分页信息加载服务器告警信息
+     *
+     * @param ip
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    PMSResult loadAlarmData(String ip, String page, String pageSize);
 }

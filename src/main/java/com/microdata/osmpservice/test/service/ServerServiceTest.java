@@ -32,4 +32,10 @@ public class ServerServiceTest {
         PMSResult result = serverService.loadServerDetailRealTime("192.168.1.87");
         System.out.println(result);
     }
+
+    @Test
+    public void testLoadAlarmData() {
+        PMSResult result = serverService.loadAlarmData("192.168.1.87", "1", "3");
+        System.out.println(result);
+    }
 }

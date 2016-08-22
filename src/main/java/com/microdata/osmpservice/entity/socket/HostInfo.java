@@ -69,7 +69,7 @@ public class HostInfo implements Serializable {
     public void initHostInfo(String hostInfo) {
         if ("0".equals(hostInfo)) {
             this.fillSuccess = false;
-        }else{
+        } else {
             String[] info = hostInfo.split("<string>");
             this.hostName = info[0];
             this.manufacturer = info[1];
@@ -180,5 +180,24 @@ public class HostInfo implements Serializable {
 
     public void setFillSuccess(boolean fillSuccess) {
         this.fillSuccess = fillSuccess;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("HostInfo{");
+        sb.append("hostName='").append(hostName).append('\'');
+        sb.append(", manufacturer='").append(manufacturer).append('\'');
+        sb.append(", model='").append(model).append('\'');
+        sb.append(", serialNumber='").append(serialNumber).append('\'');
+        sb.append(", cpuName='").append(cpuName).append('\'');
+        sb.append(", cpuCoreNumber='").append(cpuCoreNumber).append('\'');
+        sb.append(", cpuFrequency='").append(cpuFrequency).append('\'');
+        sb.append(", os='").append(os).append('\'');
+        sb.append(", osVersion='").append(osVersion).append('\'');
+        sb.append(", totalMemory='").append(totalMemory).append('\'');
+        sb.append(", totalStorage='").append(totalStorage).append('\'');
+        sb.append(", fillSuccess=").append(fillSuccess);
+        sb.append('}');
+        return sb.toString();
     }
 }
