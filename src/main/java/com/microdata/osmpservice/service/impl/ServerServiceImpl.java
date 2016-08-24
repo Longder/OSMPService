@@ -143,18 +143,28 @@ public class ServerServiceImpl implements ServerService {
      * @return
      */
     @Override
-    public PMSResult loadServerHistory(String ip, String startDate, String endDate) {
-        String rex = "yyyy-MM-dd";
+    public PMSResult loadServerHistory(String ip, String day, String page, String pageSize) {
+
+        //mybatis分页
+        Map<String, Object> conditionMap = createMybatisPageInfo(page, pageSize);
         //构建查询条件
-        Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("ip", ip);
-        conditionMap.put("startDate", CommonUtil.parseSqlDate(startDate, rex));
-        conditionMap.put("endDate", CommonUtil.parseSqlDate(endDate, rex));
+        conditionMap.put("day", day);
         List<ServerData> list = serverDataDao.findByIpAndTime(conditionMap);
         if (list != null && list.size() > 0) {
             pmsResult.setStatus(0);
             pmsResult.setMessage("查询成功");
-            pmsResult.setData(list);
+            ServerDataVO serverDataVO = new ServerDataVO();
+            serverDataVO.setServerData(list);
+            //处理over标识
+            int count = serverDataDao.findCountByIp(conditionMap);
+            int totalPage = CommonUtil.getTotalPages(count, Integer.parseInt(pageSize));
+            if (totalPage == Integer.parseInt(page)) {
+                serverDataVO.setOver(true);
+            } else {
+                serverDataVO.setOver(false);
+            }
+            pmsResult.setData(serverDataVO);
         } else {
             pmsResult.setStatus(1);
             pmsResult.setMessage("未查询到数据");

@@ -5,18 +5,27 @@
 <mapper namespace="com.microdata.osmpservice.dao.ServerDataDao">
     <select id="findByIpAndTime" parameterType="java.util.Map" resultMap="serverDataMap">
         SELECT ip,date_format(server_time,'%Y-%m-%d %T') server_time,server_cpu,
-                server_memory,server_io_r,server_io_w,
-                server_v_memory,server_storage,server_status
-         FROM pms_server_data
+        server_memory,server_io_r,server_io_w,
+        server_v_memory,server_storage,server_status
+        FROM pms_server_data
         <where>
             <if test="ip!=null and name!=''">
                 AND ip=#{ip}
             </if>
-            <if test="startDate!=null">
-                AND server_time <![CDATA[>=]]> #{startDate}
+            <if test="day!=null">
+                AND date_format(server_time,'%Y-%m-%d')=#{day}
             </if>
-            <if test="endDate!=null">
-                AND server_time <![CDATA[<=]]> #{endDate}
+        </where>
+        LIMIT #{start},#{limit}
+    </select>
+    <select id="findCountByIp" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(*) FROM pms_server_data
+        <where>
+            <if test="ip!=null and name!=''">
+                AND ip=#{ip}
+            </if>
+            <if test="day!=null">
+                AND date_format(server_time,'%Y-%m-%d')=#{day}
             </if>
         </where>
     </select>
@@ -25,8 +34,8 @@
         <result column="server_time" property="time"/>
         <result column="server_cpu" property="cpuRate"/>
         <result column="server_memory" property="memoryRate"/>
-        <result column="server_io_r" property="ioReadRate"/>
-        <result column="server_io_w" property="ioWriteRate"/>
+        <result column="server_io_r" property="ioReadKps"/>
+        <result column="server_io_w" property="ioWriteKps"/>
         <result column="server_v_memory" property="virtualMemoryRate"/>
         <result column="server_storage" property="storageRate"/>
         <result column="server_status" property="status"/>

@@ -38,4 +38,10 @@ public class ServerServiceTest {
         PMSResult result = serverService.loadAlarmData("192.168.1.87", "1", "3");
         System.out.println(result);
     }
+
+    @Test
+    public void testLoadServerHistory() {
+        PMSResult result = serverService.loadServerHistory("192.168.1.2", "2016-07-01", "1", "10");
+        System.out.println(result);
+    }
 }

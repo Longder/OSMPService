@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Map;
 
 
@@ -18,8 +19,8 @@ import java.util.Map;
 public class Log4jTest {
 
     public static void main(String[] args) throws IOException {
-        Double info = SocketUtil.getCPURate("192.168.1.87");
-        //HostInfo hostInfo = new HostInfo(info);
-        System.out.println(100-info);
+        //"getDiskInfo"
+        String info = SocketConnectionHandler.getInfo("192.168.1.87", "getCpuInfo");
+        System.out.println(info);
     }
 }

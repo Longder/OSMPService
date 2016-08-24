@@ -8,14 +8,41 @@ import java.io.Serializable;
  * Created by Longder on 2016/8/19.
  */
 public class ServerData implements Serializable {
+    /**
+     * ip地址
+     */
     private String ip;
+    /**
+     * 记录时间
+     */
     private String time;
+    /**
+     * CPU使用率
+     */
     private String cpuRate;
+    /**
+     * 内存使用率
+     */
     private String memoryRate;
+    /**
+     * 虚拟内存使用率
+     */
     private String virtualMemoryRate;
-    private String ioReadRate;
-    private String ioWriteRate;
+    /**
+     * io读取KPS
+     */
+    private String ioReadKps;
+    /**
+     * io写入KPS
+     */
+    private String ioWriteKps;
+    /**
+     * 磁盘使用率
+     */
     private String storageRate;
+    /**
+     * 状态
+     */
     private String status;
 
     public String getIp() {
@@ -58,20 +85,20 @@ public class ServerData implements Serializable {
         this.virtualMemoryRate = virtualMemoryRate;
     }
 
-    public String getIoReadRate() {
-        return ioReadRate;
+    public String getIoReadKps() {
+        return ioReadKps;
     }
 
-    public void setIoReadRate(String ioReadRate) {
-        this.ioReadRate = ioReadRate;
+    public void setIoReadKps(String ioReadKps) {
+        this.ioReadKps = ioReadKps;
     }
 
-    public String getIoWriteRate() {
-        return ioWriteRate;
+    public String getIoWriteKps() {
+        return ioWriteKps;
     }
 
-    public void setIoWriteRate(String ioWriteRate) {
-        this.ioWriteRate = ioWriteRate;
+    public void setIoWriteKps(String ioWriteKps) {
+        this.ioWriteKps = ioWriteKps;
     }
 
     public String getStorageRate() {

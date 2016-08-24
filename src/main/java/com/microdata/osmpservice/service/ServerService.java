@@ -38,7 +38,7 @@ public interface ServerService {
      * @param ip
      * @return
      */
-    PMSResult loadServerHistory(String ip, String startDate, String endDate);
+    PMSResult loadServerHistory(String ip, String day, String page,String pageSize);
 
     /**
      * 根据IP实时加载CPU详情

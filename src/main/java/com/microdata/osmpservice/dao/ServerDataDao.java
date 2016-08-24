@@ -13,5 +13,7 @@ import java.util.Map;
 @Repository
 public interface ServerDataDao {
 
-    List<ServerData> findByIpAndTime(Map<String,Object> condition);
+    List<ServerData> findByIpAndTime(Map<String, Object> condition);
+
+    Integer findCountByIp(Map<String, Object> condition);
 }

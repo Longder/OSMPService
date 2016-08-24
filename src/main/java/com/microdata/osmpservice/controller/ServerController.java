@@ -62,9 +62,10 @@ public class ServerController {
      */
     @RequestMapping(value = "/history")
     public PMSResult serverHistory(@RequestParam(value = "ip") String ip,
-                                   @RequestParam(value = "startDate") String startDate,
-                                   @RequestParam(value = "endDate") String endDate) {
-        return serverService.loadServerHistory(ip, startDate, endDate);
+                                   @RequestParam(value = "day") String day,
+                                   @RequestParam(value = "page", defaultValue = "1") String page,
+                                   @RequestParam(value = "pageSize", defaultValue = "10") String pageSize) {
+        return serverService.loadServerHistory(ip, day, page, pageSize);
     }
 
     /**
