@@ -1,6 +1,7 @@
 package com.microdata.osmpservice.dao;
 
 import com.microdata.osmpservice.entity.model.ServerVO;
+import com.microdata.osmpservice.entity.po.Server;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface ServerDao {
      */
     List<ServerVO> findByCondition(Map<String, Object> conditionMap);
 
+    /**
+     * 根据ip查询服务器信息
+     */
+    Server findByIp(String ip);
 }

@@ -30,6 +30,10 @@ public final class SocketOrder {
      */
     public static final String GET_STORAGE_TOTAL_PERCENT = "getStorageTotalPercent";
     /**
+     * 获取存储总量
+     */
+    public static final String GET_STORAGE_TOTAL_SIZE = "getDiskSizeTotal";
+    /**
      * 获取CPU使用百分比
      */
     public static final String GET_CPU_PERCENT = "getCPUPercent";
@@ -41,4 +45,8 @@ public final class SocketOrder {
      * 获取虚拟内存使用百分比
      */
     public static final String GET_V_MEMORY_PERCENT = "getVMemoryPercent";
+    /**
+     * 获取磁盘信息
+     */
+    public static final String GET_DISK_INFO = "getDiskInfo";
 }

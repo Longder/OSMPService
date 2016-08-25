@@ -44,4 +44,16 @@ public class ServerServiceTest {
         PMSResult result = serverService.loadServerHistory("192.168.1.2", "2016-07-01", "1", "10");
         System.out.println(result);
     }
+
+    @Test
+    public void testLoadStorageDetail() {
+        PMSResult result = serverService.loadStorageDetailRealTime("192.168.1.87");
+        System.out.println(result);
+    }
+
+    @Test
+    public void testLoadStates() {
+        PMSResult result = serverService.loadStatesDetailRealTime("192.168.1.87");
+        System.out.println(result);
+    }
 }

@@ -1,7 +1,9 @@
 package com.microdata.osmpservice.test;
 
 import com.microdata.osmpservice.constant.SocketOrder;
+import com.microdata.osmpservice.entity.model.DiskDetailVO;
 import com.microdata.osmpservice.entity.socket.HostInfo;
+import com.microdata.osmpservice.util.CommonUtil;
 import com.microdata.osmpservice.util.SocketConnectionHandler;
 import com.microdata.osmpservice.util.SocketUtil;
 import org.apache.log4j.LogManager;
@@ -20,7 +22,7 @@ public class Log4jTest {
 
     public static void main(String[] args) throws IOException {
         //"getDiskInfo"
-        String info = SocketConnectionHandler.getInfo("192.168.1.87", "getCpuInfo");
-        System.out.println(info);
+        //Map<String, DiskDetailVO> map = SocketUtil.getDiskDetail("192.168.1.79","");
+       // System.out.println(map);
     }
 }

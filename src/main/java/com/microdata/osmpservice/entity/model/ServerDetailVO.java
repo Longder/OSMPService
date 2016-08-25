@@ -3,6 +3,7 @@ package com.microdata.osmpservice.entity.model;
 import java.io.Serializable;
 
 /**
+ * 服务器实时详情数据
  * Created by Longder on 2016/8/15.
  */
 public class ServerDetailVO implements Serializable {

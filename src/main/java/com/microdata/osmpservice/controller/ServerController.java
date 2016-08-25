@@ -93,4 +93,36 @@ public class ServerController {
                                @RequestParam(value = "pageSize", defaultValue = "3") String pageSize) {
         return serverService.loadAlarmData(ip, page, pageSize);
     }
+
+    /**
+     * 获取服务器硬件信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/hardware")
+    public PMSResult hardwareDetail(@RequestParam(value = "ip") String ip) {
+        return serverService.loadHardwareDetail(ip);
+    }
+
+    /**
+     * 获取服务器存储信息
+     *
+     * @param ip
+     * @return
+     */
+    @RequestMapping(value = "/storage")
+    public PMSResult storageDetail(@RequestParam(value = "ip") String ip) {
+        return serverService.loadStorageDetailRealTime(ip);
+    }
+
+    /**
+     * 获取服务器多状态详情
+     *
+     * @param ip
+     * @return
+     */
+    @RequestMapping(value = "/states")
+    public PMSResult statesDetail(@RequestParam(value = "ip") String ip) {
+        return serverService.loadStatesDetailRealTime(ip);
+    }
 }

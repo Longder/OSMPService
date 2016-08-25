@@ -15,4 +15,20 @@
         </where>
         LIMIT #{start},#{limit}
     </select>
+    <select id="findByIp" resultMap="serverMap" parameterType="string">
+      SELECT * FROM pms_server WHERE ip=#{ip}
+    </select>
+    <resultMap id="serverMap" type="com.microdata.osmpservice.entity.po.Server">
+        <result column="id" property="id"/>
+        <result column="ip" property="ip"/>
+        <result column="server_cycle" property="cycle"/>
+        <result column="server_time_begin" property="beginTime"/>
+        <result column="server_time_end" property="endTime"/>
+        <result column="cpu_warning" property="cpuWarning"/>
+        <result column="memory_warning" property="memoryWarning"/>
+        <result column="io_warning" property="ioWarning"/>
+        <result column="v_memory_warning" property="virtualMemoryWarning"/>
+        <result column="storage_warning" property="storageWarning"/>
+        <result column="server_jkbz" property="monitoringFlag"/>
+    </resultMap>
 </mapper>

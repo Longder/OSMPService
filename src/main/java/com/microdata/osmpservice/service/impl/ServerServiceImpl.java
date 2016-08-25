@@ -1,6 +1,7 @@
 package com.microdata.osmpservice.service.impl;
 
 import com.microdata.osmpservice.constant.SocketOrder;
+import com.microdata.osmpservice.constant.StateConstant;
 import com.microdata.osmpservice.dao.AlarmDataDao;
 import com.microdata.osmpservice.dao.HostDao;
 import com.microdata.osmpservice.dao.ServerDao;
@@ -8,6 +9,7 @@ import com.microdata.osmpservice.dao.ServerDataDao;
 import com.microdata.osmpservice.entity.PMSResult;
 import com.microdata.osmpservice.entity.model.*;
 import com.microdata.osmpservice.entity.po.Host;
+import com.microdata.osmpservice.entity.po.Server;
 import com.microdata.osmpservice.entity.po.ServerData;
 import com.microdata.osmpservice.entity.socket.HostInfo;
 import com.microdata.osmpservice.exception.PMSException;
@@ -74,16 +76,17 @@ public class ServerServiceImpl implements ServerService {
      * @return
      */
     public PMSResult loadServerDetailRealTime(String ip) {
-        //判断主机的类型来进行获取数据
+        //封装HostInfo
         HostInfo hostInfo = getHostInfo(ip);
         ServerDetailVO serverDetail = new ServerDetailVO();
         //判断是否获取成功
         if (hostInfo.isFillSuccess()) {
             Map<Integer, String> memoryInfo = SocketUtil.getMemoryDetail(ip);
+            Map<Integer, String> storageInfo = SocketUtil.getMemoryDetail(ip);
             //内存剩余容量
             serverDetail.setFreeMemory(memoryInfo.get(SocketUtil.FREE_MEMORY));
             //硬盘剩余容量
-            serverDetail.setFreeStorage(SocketUtil.getResidualCapacity(hostInfo.getTotalStorage(), SocketConnectionHandler.getInfo(ip, SocketOrder.GET_STORAGE_TOTAL_PERCENT)));
+            serverDetail.setFreeStorage(storageInfo.get(SocketUtil.FREE_STORAGE));
             //CPU实时占用百分比（不带单位）
             serverDetail.setCpuRate(SocketUtil.getCPURate(ip));
             //内存实时占用百分比（不带单位）
@@ -144,7 +147,6 @@ public class ServerServiceImpl implements ServerService {
      */
     @Override
     public PMSResult loadServerHistory(String ip, String day, String page, String pageSize) {
-
         //mybatis分页
         Map<String, Object> conditionMap = createMybatisPageInfo(page, pageSize);
         //构建查询条件
@@ -232,6 +234,101 @@ public class ServerServiceImpl implements ServerService {
     }
 
     /**
+     * 根据IP加载主机硬件详情
+     *
+     * @param ip
+     * @return
+     */
+    @Override
+    public PMSResult loadHardwareDetail(String ip) {
+        //封装HostInfo
+        HostInfo hostInfo = getHostInfo(ip);
+        //判断是否封装成功
+        if (hostInfo.isFillSuccess()) {
+            pmsResult.setStatus(0);
+            pmsResult.setMessage("查询成功");
+            pmsResult.setData(hostInfo);
+        } else {
+            pmsResult.setStatus(2);
+            pmsResult.setMessage("此IP下服务器异常");
+            pmsResult.setData(null);
+        }
+        return pmsResult;
+    }
+
+    /**
+     * 根据ip加载服务器磁盘信息（实时）
+     *
+     * @param ip
+     * @return
+     */
+    @Override
+    public PMSResult loadStorageDetailRealTime(String ip) {
+        try {
+            Map<Integer, String> storageInfo = SocketUtil.getStorageDetail(ip);
+            StorageDetailVO storageDetail = new StorageDetailVO();
+            storageDetail.setTotal(storageInfo.get(SocketUtil.TOTAL_STORAGE));
+            storageDetail.setFree(storageInfo.get(SocketUtil.FREE_STORAGE));
+            storageDetail.setUsed(storageInfo.get(SocketUtil.USED_STORAGE));
+            //磁盘详情处理
+            Map<String, DiskDetailVO> diskMap = SocketUtil.getDiskDetail(ip, storageInfo.get(SocketUtil.TOTAL_STORAGE));
+            storageDetail.setDiskDetails(diskMap);
+            pmsResult.setStatus(0);
+            pmsResult.setMessage("查询成功");
+            pmsResult.setData(storageDetail);
+        } catch (PMSException e) {
+            pmsResult.setStatus(2);
+            pmsResult.setMessage("此IP下服务器异常");
+            pmsResult.setData(null);
+        }
+        return pmsResult;
+    }
+
+    /**
+     * 根据ip加载服务器各状态信息（实时）
+     *
+     * @param ip
+     * @return
+     */
+    @Override
+    public PMSResult loadStatesDetailRealTime(String ip) {
+        //处理主机名和操作系统名
+        HostInfo hostInfo = getHostInfo(ip);
+        if (hostInfo.isFillSuccess()) {
+            StatesDetailVO states = new StatesDetailVO();
+            states.setHostName(hostInfo.getHostName());
+            states.setOs(hostInfo.getOs());
+            //库中的server监控配置
+            Server server = serverDao.findByIp(ip);
+            //cpu实时状态
+            Double cpuRate = SocketUtil.getCPURate(ip);
+            Integer cpuState = getState(server.getCpuWarning(), cpuRate.intValue());
+            states.setCpuState(cpuState);
+            //内存实时状态
+            Double memoryRate = SocketUtil.getMemoryRate(ip);
+            Integer memoryState = getState(server.getMemoryWarning(), memoryRate.intValue());
+            states.setMemoryState(memoryState);
+            //根据cpu和内存状态，处理服务器状态
+            Integer serverState = null;
+            if (cpuState == StateConstant.WARNING || memoryState == StateConstant.WARNING) {
+                serverState = StateConstant.WARNING;
+            } else {
+                serverState = StateConstant.NORMAL;
+            }
+            states.setServerState(serverState);
+            pmsResult.setStatus(0);
+            pmsResult.setMessage("查询成功");
+            pmsResult.setData(states);
+        } else {
+            pmsResult.setStatus(2);
+            pmsResult.setMessage("此IP下服务器异常");
+            pmsResult.setData(null);
+        }
+
+        return pmsResult;
+    }
+
+    /**
      * 构建服务器列表集合中的实时信息（status和startDate）
      *
      * @param list
@@ -264,7 +361,6 @@ public class ServerServiceImpl implements ServerService {
 
     /**
      * 根据ip获取主机数据（实时），封装成HostInfo实体
-     * 如果获取失败，返回null
      *
      * @param ip
      * @return
@@ -308,4 +404,20 @@ public class ServerServiceImpl implements ServerService {
         return pageMap;
     }
 
+    /**
+     * 根据当前百分比数值和配置的阀值获取状态
+     *
+     * @param warning
+     * @param present
+     * @return
+     */
+    private int getState(Integer warning, Integer present) {
+        if (present == 0) {
+            return StateConstant.STOP;
+        } else if (present > warning) {
+            return StateConstant.WARNING;
+        } else {
+            return StateConstant.NORMAL;
+        }
+    }
 }

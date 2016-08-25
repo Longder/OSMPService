@@ -38,7 +38,7 @@ public interface ServerService {
      * @param ip
      * @return
      */
-    PMSResult loadServerHistory(String ip, String day, String page,String pageSize);
+    PMSResult loadServerHistory(String ip, String day, String page, String pageSize);
 
     /**
      * 根据IP实时加载CPU详情
@@ -57,4 +57,27 @@ public interface ServerService {
      * @return
      */
     PMSResult loadAlarmData(String ip, String page, String pageSize);
+
+    /**
+     * 根据IP加载服务器硬件详情
+     *
+     * @param ip
+     * @return
+     */
+    PMSResult loadHardwareDetail(String ip);
+
+    /**
+     * 根据ip加载服务器磁盘信息（实时）
+     *
+     * @param ip
+     * @return
+     */
+    PMSResult loadStorageDetailRealTime(String ip);
+
+    /**
+     * 根据ip加载服务器各状态信息（实时）
+     * @param ip
+     * @return
+     */
+    PMSResult loadStatesDetailRealTime(String ip);
 }
