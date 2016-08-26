@@ -116,7 +116,7 @@ public class ServerController {
     }
 
     /**
-     * 获取服务器多状态详情
+     * 获取服务器各状态详情
      *
      * @param ip
      * @return

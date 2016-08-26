@@ -222,7 +222,7 @@ public class ServerServiceImpl implements ServerService {
         conditionMap.put("ip", ip);
         List<AlarmDataVO> list = alarmDataDao.findByCondition(conditionMap);
         if (CommonUtil.checkListNullOrEmpty(list)) {
-            pmsResult.setStatus(2);
+            pmsResult.setStatus(1);
             pmsResult.setMessage("该页没有数据");
             pmsResult.setData(null);
         } else {
@@ -257,7 +257,7 @@ public class ServerServiceImpl implements ServerService {
     }
 
     /**
-     * 根据ip加载服务器磁盘信息（实时）
+     * 根据ip加载服务器存储信息（实时）
      *
      * @param ip
      * @return
@@ -309,7 +309,7 @@ public class ServerServiceImpl implements ServerService {
             Integer memoryState = getState(server.getMemoryWarning(), memoryRate.intValue());
             states.setMemoryState(memoryState);
             //根据cpu和内存状态，处理服务器状态
-            Integer serverState = null;
+            Integer serverState;
             if (cpuState == StateConstant.WARNING || memoryState == StateConstant.WARNING) {
                 serverState = StateConstant.WARNING;
             } else {
@@ -324,7 +324,6 @@ public class ServerServiceImpl implements ServerService {
             pmsResult.setMessage("此IP下服务器异常");
             pmsResult.setData(null);
         }
-
         return pmsResult;
     }
 

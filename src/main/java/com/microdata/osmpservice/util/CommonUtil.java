@@ -106,4 +106,36 @@ public class CommonUtil {
         }
         return DECIMAL_FORMAT.format(Double.parseDouble(member) / Double.parseDouble(total) * 100);
     }
+
+    public static String secondToTime(int time) {
+        StringBuilder timeBuilder = new StringBuilder();
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        if (time <= 0)
+            return "0小时0分0秒";
+        else {
+            minute = time / 60;
+            if (minute < 60) {
+                second = time % 60;
+                timeBuilder.append(minute);
+                timeBuilder.append("分");
+                timeBuilder.append(second);
+                timeBuilder.append("秒");
+            } else {
+                hour = minute / 60;
+                if (hour > 99)
+                    return "99:59:59";
+                minute = minute % 60;
+                second = time - hour * 3600 - minute * 60;
+                timeBuilder.append(hour);
+                timeBuilder.append("小时");
+                timeBuilder.append(minute);
+                timeBuilder.append("分");
+                timeBuilder.append(second);
+                timeBuilder.append("秒");
+            }
+        }
+        return timeBuilder.toString();
+    }
 }

@@ -36,7 +36,7 @@ public class StatesDetailVO {
     /**
      * 主板状态
      */
-    private Integer mainboardState;
+    private Integer motherboardState;
     /**
      * 风扇状态
      */
@@ -98,12 +98,12 @@ public class StatesDetailVO {
         this.networkState = networkState;
     }
 
-    public Integer getMainboardState() {
-        return mainboardState;
+    public Integer getMotherboardState() {
+        return motherboardState;
     }
 
-    public void setMainboardState(Integer mainboardState) {
-        this.mainboardState = mainboardState;
+    public void setMotherboardState(Integer motherboardState) {
+        this.motherboardState = motherboardState;
     }
 
     public Integer getFanState() {

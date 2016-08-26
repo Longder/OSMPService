@@ -24,5 +24,7 @@ public class Log4jTest {
         //"getDiskInfo"
         //Map<String, DiskDetailVO> map = SocketUtil.getDiskDetail("192.168.1.79","");
        // System.out.println(map);
+        String time = CommonUtil.secondToTime(21191);
+        System.out.println(time);
     }
 }
