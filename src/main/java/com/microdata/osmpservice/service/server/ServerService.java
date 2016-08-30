@@ -1,4 +1,4 @@
-package com.microdata.osmpservice.service;
+package com.microdata.osmpservice.service.server;
 
 import com.microdata.osmpservice.entity.PMSResult;
 

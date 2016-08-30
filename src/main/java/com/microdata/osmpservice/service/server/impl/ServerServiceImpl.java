@@ -1,4 +1,4 @@
-package com.microdata.osmpservice.service.impl;
+package com.microdata.osmpservice.service.server.impl;
 
 import com.microdata.osmpservice.constant.SocketOrder;
 import com.microdata.osmpservice.constant.StateConstant;
@@ -13,12 +13,11 @@ import com.microdata.osmpservice.entity.po.Server;
 import com.microdata.osmpservice.entity.po.ServerData;
 import com.microdata.osmpservice.entity.socket.HostInfo;
 import com.microdata.osmpservice.exception.PMSException;
-import com.microdata.osmpservice.service.ServerService;
+import com.microdata.osmpservice.service.server.ServerService;
 import com.microdata.osmpservice.util.CommonUtil;
 import com.microdata.osmpservice.util.SocketConnectionHandler;
 import com.microdata.osmpservice.util.SocketUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.HashMap;

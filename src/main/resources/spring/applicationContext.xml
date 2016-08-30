@@ -8,29 +8,38 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    <bean class="com.microdata.osmpservice.util.DynamicDataSourceHandler">
+        <property name="targetDataSources">
+            <map>
+                <entry key="user" value-ref="dynamicDataSource"/>
+            </map>
+        </property>
+    </bean>
     <!--pms数据库链接配置文件-->
     <util:properties id="dbProps" location="classpath:db.properties"/>
     <!--dbcp连接池-->
-    <bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="pmsDataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="#{dbProps.driverName}"/>
         <property name="url" value="#{dbProps.url}"/>
         <property name="username" value="#{dbProps.username}"/>
         <property name="password" value="#{dbProps.password}"/>
     </bean>
+    <bean id="dynamicDataSource" class="org.apache.commons.dbcp.BasicDataSource"/>
     <!--组件扫描-->
     <context:component-scan base-package="com.microdata.osmpservice"/>
     <!--整合Mybatis的SqlSessionFactoryBean-->
-    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="basicDataSource"/>
+    <bean id="pmsFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="pmsDataSource"/>
         <property name="mapperLocations" value="classpath:mappers/pms/*.xml"/>
     </bean>
     <!--Mybatis DAO扫描-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="pmsFactoryBean"/>
         <property name="basePackage" value="com.microdata.osmpservice.dao"/>
     </bean>
     <!--spring事务管理（注解版）@Transactional-->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="basicDataSource"/>
+        <property name="dataSource" ref="pmsDataSource"/>
     </bean>
     <tx:annotation-driven transaction-manager="txManager"/>
 </beans>

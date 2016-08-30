@@ -1,11 +1,10 @@
-package com.microdata.osmpservice.service.impl;
+package com.microdata.osmpservice.service.user.impl;
 
 import com.microdata.osmpservice.dao.UserDao;
 import com.microdata.osmpservice.entity.PMSResult;
 import com.microdata.osmpservice.entity.po.User;
-import com.microdata.osmpservice.service.UserService;
+import com.microdata.osmpservice.service.user.UserService;
 import com.microdata.osmpservice.util.CommonUtil;
-import com.microdata.osmpservice.util.SocketUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

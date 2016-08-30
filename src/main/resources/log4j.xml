@@ -11,7 +11,7 @@
         </layout>
     </appender>
     <root>
-        <level value="WARN" />
+        <level value="INFO" />
         <appender-ref ref="terminal" />
     </root>
 </log4j:configuration>

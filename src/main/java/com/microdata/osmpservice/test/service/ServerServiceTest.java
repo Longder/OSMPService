@@ -1,10 +1,10 @@
 package com.microdata.osmpservice.test.service;
 
 import com.microdata.osmpservice.entity.PMSResult;
-import com.microdata.osmpservice.service.ServerService;
+import com.microdata.osmpservice.service.server.ServerService;
+import com.microdata.osmpservice.util.CustomerContextHolder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -38,6 +38,7 @@ public class ServerServiceTest {
     public void testLoadAlarmData() {
         PMSResult result = serverService.loadAlarmData("192.168.1.87", "1", "3");
         System.out.println(result);
+        CustomerContextHolder.setCustomerType("user");
     }
 
     @Test

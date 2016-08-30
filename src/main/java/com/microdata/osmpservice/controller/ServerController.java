@@ -1,7 +1,7 @@
 package com.microdata.osmpservice.controller;
 
 import com.microdata.osmpservice.entity.PMSResult;
-import com.microdata.osmpservice.service.ServerService;
+import com.microdata.osmpservice.service.server.ServerService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
