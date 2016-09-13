@@ -1,4 +1,4 @@
-package com.microdata.osmpservice.dao;
+package com.microdata.osmpservice.dao.pms;
 
 import com.microdata.osmpservice.entity.po.Host;
 import org.springframework.stereotype.Repository;

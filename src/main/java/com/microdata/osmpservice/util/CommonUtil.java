@@ -1,5 +1,8 @@
 package com.microdata.osmpservice.util;
 
+import com.microdata.osmpservice.entity.po.DbInfo;
+import org.apache.commons.dbcp.BasicDataSource;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -107,35 +110,30 @@ public class CommonUtil {
         return DECIMAL_FORMAT.format(Double.parseDouble(member) / Double.parseDouble(total) * 100);
     }
 
-    public static String secondToTime(int time) {
-        StringBuilder timeBuilder = new StringBuilder();
-        int hour = 0;
-        int minute = 0;
-        int second = 0;
-        if (time <= 0)
-            return "0小时0分0秒";
-        else {
-            minute = time / 60;
-            if (minute < 60) {
-                second = time % 60;
-                timeBuilder.append(minute);
-                timeBuilder.append("分");
-                timeBuilder.append(second);
-                timeBuilder.append("秒");
-            } else {
-                hour = minute / 60;
-                if (hour > 99)
-                    return "99:59:59";
-                minute = minute % 60;
-                second = time - hour * 3600 - minute * 60;
-                timeBuilder.append(hour);
-                timeBuilder.append("小时");
-                timeBuilder.append(minute);
-                timeBuilder.append("分");
-                timeBuilder.append(second);
-                timeBuilder.append("秒");
-            }
+    /**
+     * 根据数据库配置生成数据库URL
+     * @param dbInfo
+     * @return
+     */
+    public static String getDatabaseUrl(DbInfo dbInfo) {
+        StringBuilder sb=new StringBuilder();
+        if ("Oracle".equals(dbInfo.getType())) {
+            sb.append("jdbc:oracle:thin:@");
+            sb.append(dbInfo.getIp());
+            sb.append(":");
+            sb.append(dbInfo.getPort());
+            sb.append(":");
+            sb.append(dbInfo.getName());
+        }else if("MySQL".equals(dbInfo.getType())){
+            sb.append("jdbc:mysql://");
+            sb.append(dbInfo.getIp());
+            sb.append(":");
+            sb.append(dbInfo.getPort());
+            sb.append("/");
+            sb.append(dbInfo.getName());
+            sb.append("?serverTimezone=GMT%2b8");
         }
-        return timeBuilder.toString();
+        return sb.toString();
     }
+
 }

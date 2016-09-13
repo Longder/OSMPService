@@ -35,7 +35,7 @@
     <!--Mybatis DAO扫描-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="pmsFactoryBean"/>
-        <property name="basePackage" value="com.microdata.osmpservice.dao"/>
+        <property name="basePackage" value="com.microdata.osmpservice.dao.pms"/>
     </bean>
     <!--spring事务管理（注解版）@Transactional-->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -1,6 +1,6 @@
 package com.microdata.osmpservice.test.dao;
 
-import com.microdata.osmpservice.dao.HostDataDao;
+import com.microdata.osmpservice.dao.pms.HostDataDao;
 import com.microdata.osmpservice.entity.po.HostData;
 import org.junit.Test;
 import org.junit.runner.RunWith;

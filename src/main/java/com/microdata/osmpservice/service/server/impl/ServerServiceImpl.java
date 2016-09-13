@@ -2,10 +2,10 @@ package com.microdata.osmpservice.service.server.impl;
 
 import com.microdata.osmpservice.constant.SocketOrder;
 import com.microdata.osmpservice.constant.StateConstant;
-import com.microdata.osmpservice.dao.AlarmDataDao;
-import com.microdata.osmpservice.dao.HostDao;
-import com.microdata.osmpservice.dao.ServerDao;
-import com.microdata.osmpservice.dao.ServerDataDao;
+import com.microdata.osmpservice.dao.pms.AlarmDataDao;
+import com.microdata.osmpservice.dao.pms.HostDao;
+import com.microdata.osmpservice.dao.pms.ServerDao;
+import com.microdata.osmpservice.dao.pms.ServerDataDao;
 import com.microdata.osmpservice.entity.PMSResult;
 import com.microdata.osmpservice.entity.model.*;
 import com.microdata.osmpservice.entity.po.Host;

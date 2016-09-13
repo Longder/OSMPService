@@ -1,6 +1,6 @@
 package com.microdata.osmpservice.test.dao;
 
-import com.microdata.osmpservice.dao.ServerDataDao;
+import com.microdata.osmpservice.dao.pms.ServerDataDao;
 import com.microdata.osmpservice.entity.po.ServerData;
 import com.microdata.osmpservice.util.CommonUtil;
 import org.junit.Test;

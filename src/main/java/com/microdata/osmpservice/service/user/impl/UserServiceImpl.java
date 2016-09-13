@@ -1,6 +1,6 @@
 package com.microdata.osmpservice.service.user.impl;
 
-import com.microdata.osmpservice.dao.UserDao;
+import com.microdata.osmpservice.dao.pms.UserDao;
 import com.microdata.osmpservice.entity.PMSResult;
 import com.microdata.osmpservice.entity.po.User;
 import com.microdata.osmpservice.service.user.UserService;

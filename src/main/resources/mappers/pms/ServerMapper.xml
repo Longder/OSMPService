@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.microdata.osmpservice.dao.ServerDao">
+<mapper namespace="com.microdata.osmpservice.dao.pms.ServerDao">
     <select id="findByCondition" resultType="com.microdata.osmpservice.entity.model.ServerVO"
             parameterType="java.util.Map">
         SELECT h.ip ip,h.host_name serverName

@@ -27,6 +27,7 @@ public class LoggerBean {
 
     @Before("within(com.microdata.osmpservice.controller..*)")
     public void preController(JoinPoint joinPoint) {
+
         String targetName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         String info = createLogInfo(targetName, methodName);
@@ -35,7 +36,7 @@ public class LoggerBean {
         builder.setLength(0);
     }
 
-    @Around("within(com.microdata.osmpservice.service..*)")
+    @Around("within(com.microdata.osmpservice.service.database.impl..*)")
     public Object aroundMethod(ProceedingJoinPoint pjd) {
         String targetName = pjd.getTarget().getClass().getName();
         String methodName = pjd.getSignature().getName();

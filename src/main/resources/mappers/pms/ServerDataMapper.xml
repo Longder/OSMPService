@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.microdata.osmpservice.dao.ServerDataDao">
+<mapper namespace="com.microdata.osmpservice.dao.pms.ServerDataDao">
     <select id="findByIpAndTime" parameterType="java.util.Map" resultMap="serverDataMap">
         SELECT ip,date_format(server_time,'%Y-%m-%d %T') server_time,server_cpu,
         server_memory,server_io_r,server_io_w,

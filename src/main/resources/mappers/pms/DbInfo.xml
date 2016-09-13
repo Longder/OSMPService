@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.microdata.osmpservice.dao.pms.DbInfoDao">
+    <select id="findByIp" parameterType="string" resultMap="dbInfoMap">
+        SELECT a.id id,a.ip ip,b.db_type db_type,a.db_name db_name,a.db_username db_username,a.db_password db_password,
+                a.db_port db_port,a.db_cycle db_cycle,a.db_time_begin db_time_begin,a.db_time_end db_time_end,a.db_jkbz db_jkbz
+         FROM pms_db a INNER JOIN pms_dm_db b ON a.db_type=b.db_name WHERE a.ip=#{ip}
+    </select>
+
+    <resultMap id="dbInfoMap" type="com.microdata.osmpservice.entity.po.DbInfo">
+        <result column="id" property="id"/>
+        <result column="ip" property="ip"/>
+        <result column="db_type" property="type"/>
+        <result column="db_name" property="name"/>
+        <result column="db_username" property="username"/>
+        <result column="db_password" property="password"/>
+        <result column="db_port" property="port"/>
+        <result column="db_cycle" property="cycle"/>
+        <result column="db_time_begin" property="beginTime"/>
+        <result column="db_time_end" property="endTime"/>
+        <result column="db_jkbz" property="monitoringFlag"/>
+    </resultMap>
+</mapper>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.microdata.osmpservice.dao.HostDataDao">
+<mapper namespace="com.microdata.osmpservice.dao.pms.HostDataDao">
     <select id="findAll" resultMap="hostDataMap">
         SELECT * FROM pms_host_data
     </select>
