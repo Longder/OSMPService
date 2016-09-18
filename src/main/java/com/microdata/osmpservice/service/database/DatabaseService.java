@@ -7,9 +7,9 @@ import com.microdata.osmpservice.entity.PMSResult;
  */
 public interface DatabaseService {
     /**
-     * 根据IP获取该IP下数据库的实时性能信息
+     * 根据IP获取该IP下数据库的实时信息
      * @param ip
      * @return
      */
-    PMSResult loadDatabaseInfo(String ip);
+    PMSResult loadDatabaseInfoRealTime(String ip);
 }

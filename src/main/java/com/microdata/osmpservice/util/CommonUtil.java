@@ -83,6 +83,24 @@ public class CommonUtil {
     }
 
     /**
+     * 把KB进行单位处理（自动根据情况转换为MB或KB或GB）
+     *
+     * @param data
+     * @return
+     */
+    public static String convertByte(String data) {
+        Double byteData = Double.parseDouble(data);
+        if (byteData / 1024 < 1024) {//KB
+            return DECIMAL_FORMAT.format(byteData / 1024) + "KB";
+        } else if (byteData / 1024 / 1024 < 1024) {//MB
+            return DECIMAL_FORMAT.format(byteData / 1024 / 1024) + "MB";
+        } else if (byteData / 1024 / 1024 / 1024 < 1024) {
+            return DECIMAL_FORMAT.format(byteData / 1024 / 1024 / 1024) + "GB";
+        }
+        return null;
+    }
+
+    /**
      * 把KB数据转换为GB
      *
      * @param data
@@ -112,11 +130,12 @@ public class CommonUtil {
 
     /**
      * 根据数据库配置生成数据库URL
+     *
      * @param dbInfo
      * @return
      */
     public static String getDatabaseUrl(DbInfo dbInfo) {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         if ("Oracle".equals(dbInfo.getType())) {
             sb.append("jdbc:oracle:thin:@");
             sb.append(dbInfo.getIp());
@@ -124,7 +143,7 @@ public class CommonUtil {
             sb.append(dbInfo.getPort());
             sb.append(":");
             sb.append(dbInfo.getName());
-        }else if("MySQL".equals(dbInfo.getType())){
+        } else if ("MySQL".equals(dbInfo.getType())) {
             sb.append("jdbc:mysql://");
             sb.append(dbInfo.getIp());
             sb.append(":");

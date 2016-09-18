@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="OracleMonitorApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Oracle监控</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="resources/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+    <script src="resources/js/jquery-3.1.0.min.js"></script>
+    <script src="resources/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <!--Angular-->
+    <script src="resources/angular/angular.min.js"></script>
+    <script src="resources/angular/angular-route.min.js"></script>
+    <!--页面核心控制器-->
+    <script src="resources/js/OracleMonitorController.js"></script>
+</head>
+<body ng-controller="OracleMonitorController">
+<h2>oracle实时监控测试</h2>
+<h4>{{database}}</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">会话信息</div>
+                <div class="panel-body">
+                    会话：{{database.sessionInfo.activeSession}}<br/>
+                    当前会话：{{database.sessionInfo.inActiveSession}}<br/>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">PGA信息</div>
+                <div class="panel-body">
+                    目标尺寸：{{database.pgaInfo.target}}<br/>
+                    当前尺寸：{{database.pgaInfo.current}}<br/>
+                    PGA使用率：{{database.pgaInfo.usage+'%'}}<br/>
+                    内存排序率：{{database.pgaInfo.pctMemorySort+'%'}}<br/>
+                    专用连接：{{database.pgaInfo.dedicatedServerCount}}<br/>
+                    共享连接：{{database.pgaInfo.sharedServerCount}}<br/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            读取速度
+        </div>
+        <div class="col-lg-8">
+            SGA信息
+        </div>
+    </div>
+</div>
+</body>
+</html>

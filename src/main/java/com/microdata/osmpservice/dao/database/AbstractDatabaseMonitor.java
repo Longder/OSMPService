@@ -8,7 +8,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * Created by Longder on 2016/9/13.
  */
-public abstract class AbstractDatabaseMonitor implements DatabaseMonitor {
+public abstract class AbstractDatabaseMonitor implements DatabaseMonitor{
+    /**
+     * Oracle连接driver
+     */
+    private static final String MYSQL_DRIVER_NAME = "com.mysql.jdbc.Driver";
+    /**
+     * MySql连接driver
+     */
+    private static final String ORACLE_DRIVER_NAME = "oracle.jdbc.OracleDriver";
+
     protected JdbcTemplate jdbcTemplate;
     private BasicDataSource basicDataSource;
 
@@ -20,9 +29,9 @@ public abstract class AbstractDatabaseMonitor implements DatabaseMonitor {
     @Override
     public void initJdbcTemplate(DbInfo dbInfo) {
         basicDataSource = new BasicDataSource();
-        if ("MySQL".equals(dbInfo.getType())) {
+        if ("MySQL".equalsIgnoreCase(dbInfo.getType())) {
             basicDataSource.setDriverClassName(MYSQL_DRIVER_NAME);
-        } else if ("Oracle".equals(dbInfo.getType())) {
+        } else if ("Oracle".equalsIgnoreCase(dbInfo.getType())) {
             basicDataSource.setDriverClassName(ORACLE_DRIVER_NAME);
         }
         basicDataSource.setUrl(CommonUtil.getDatabaseUrl(dbInfo));
@@ -37,4 +46,5 @@ public abstract class AbstractDatabaseMonitor implements DatabaseMonitor {
         basicDataSource.close();
         super.finalize();
     }
+
 }
