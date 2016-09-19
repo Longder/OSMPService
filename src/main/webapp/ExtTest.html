@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ExtTest</title>
+    <link rel="stylesheet" type="text/css" href="resources/ext/resources/css/ext-all.css">
+    <script type="text/javascript" src="resources/ext/bootstrap.js"></script>
+    <script type="text/javascript" src="resources/ext/locale/ext-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        Ext.onReady(function(){
+            Ext.create("Ext.viewport",{
+                layout:"fit",
+                items:[{
+                    xtype:"panel",
+                    title:"欢迎",
+                    html:"<h1 style='text-align: center;font-size: 60px;font-weight: bold;'>Hello World!</h1>"
+                }]
+            });
+            /*            new Ext.Viewport({
+             layout:"fit",
+             items:[{
+             xtype:"panel",
+             title:"欢迎",
+             html:"<h1 style='text-align: center;font-size: 60px;font-weight: bold;'>Hello World!</h1>"
+             }]
+             });*/
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
